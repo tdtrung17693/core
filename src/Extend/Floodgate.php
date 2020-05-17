@@ -28,7 +28,6 @@ class Floodgate implements ExtenderInterface
         return $this;
     }
 
-
     public function remove(string $name)
     {
         $this->removeFloodgates[] = $name;
@@ -38,7 +37,7 @@ class Floodgate implements ExtenderInterface
 
     public function extend(Container $container, Extension $extension = null)
     {
-        $container->extend("flarum.api.floodgates", function ($floodgates) {
+        $container->extend('flarum.api.floodgates', function ($floodgates) {
             foreach ($this->removeFloodgates as $floodgateName) {
                 if (array_key_exists($floodgateName, $floodgates)) {
                     unset($floodgates[$floodgateName]);
