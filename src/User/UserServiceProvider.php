@@ -105,7 +105,6 @@ class UserServiceProvider extends AbstractServiceProvider
         }, $this->app->make('flarum.user.password_checkers'));
 
         User::setPasswordCheckers($passwordCheckers);
-
         User::setHasher($this->app->make('hash'));
         User::setGate($this->app->make('flarum.gate'));
 
