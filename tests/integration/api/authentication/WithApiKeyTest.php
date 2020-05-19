@@ -28,7 +28,6 @@ class WithApiKeyTest extends TestCase
                 $this->adminUser(),
                 $this->normalUser(),
             ],
-            'api_keys' => [],
         ]);
     }
 
