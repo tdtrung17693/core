@@ -108,7 +108,7 @@ class User extends AbstractModel
     protected static $gate;
 
     /**
-     * An array of callbacks to check the user's password
+     * An array of callbacks to check the user's password.
      */
     protected static $passwordCheckers = [];
 
@@ -765,7 +765,6 @@ class User extends AbstractModel
     {
         static::$hasher = $hasher;
     }
-
 
     /**
      * Register a preference with a transformer and a default value.
