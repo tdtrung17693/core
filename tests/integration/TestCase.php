@@ -22,6 +22,20 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
 {
     use BuildsHttpRequests;
 
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->database()->beginTransaction();
+    }
+
+    protected function tearDown(): void
+    {
+        parent::tearDown();
+
+        $this->database()->rollBack();
+    }
+
     /**
      * @var \Flarum\Foundation\InstalledApp
      */
@@ -92,13 +106,6 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
     {
         // We temporarily disable foreign key checks to simplify this process.
         $this->database()->getSchemaBuilder()->disableForeignKeyConstraints();
-
-        // First, truncate all referenced tables so that they are empty.
-        foreach (array_keys($tableData) as $table) {
-            if ($table !== 'settings') {
-                $this->database()->table($table)->truncate();
-            }
-        }
 
         // Then, insert all rows required for this test case.
         foreach ($tableData as $table => $rows) {
