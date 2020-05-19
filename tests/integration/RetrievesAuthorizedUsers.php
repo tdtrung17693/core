@@ -11,17 +11,6 @@ namespace Flarum\Tests\integration;
 
 trait RetrievesAuthorizedUsers
 {
-    protected function adminGroup(): array
-    {
-        return [
-            'id' => 1,
-            'name_singular' => 'Admin',
-            'name_plural' => 'Admins',
-            'color' => '#B72A2A',
-            'icon' => 'fas fa-wrench',
-        ];
-    }
-
     protected function guestGroup(): array
     {
         return [
@@ -41,17 +30,6 @@ trait RetrievesAuthorizedUsers
             'name_plural' => 'Members',
             'color' => null,
             'icon' => null,
-        ];
-    }
-
-    protected function adminUser(): array
-    {
-        return [
-            'id' => 1,
-            'username' => 'admin',
-            'password' => '$2y$10$HMOAe.XaQjOimA778VmFue1OCt7tj5j0wk5vfoL/CMSJq2BQlfBV2', // BCrypt hash for "password"
-            'email' => 'admin@machine.local',
-            'is_email_confirmed' => 1,
         ];
     }
 

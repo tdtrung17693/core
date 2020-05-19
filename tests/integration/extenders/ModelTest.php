@@ -29,7 +29,6 @@ class ModelTest extends TestCase
     {
         $this->prepareDatabase([
             'users' => [
-                $this->adminUser(),
                 $this->normalUser(),
             ],
         ]);
@@ -228,11 +227,6 @@ class ModelTest extends TestCase
         );
 
         $this->prepDB();
-        $this->prepareDatabase([
-            'groups' => [
-                $this->adminGroup()
-            ]
-        ]);
 
         $group = Group::find(1);
 

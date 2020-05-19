@@ -22,15 +22,8 @@ class ListTest extends TestCase
         parent::setUp();
 
         $this->prepareDatabase([
-            'users' => [
-                $this->adminUser(),
-            ],
             'groups' => [
-                $this->adminGroup(),
                 $this->guestGroup(),
-            ],
-            'group_user' => [
-                ['user_id' => 1, 'group_id' => 1],
             ],
         ]);
     }
