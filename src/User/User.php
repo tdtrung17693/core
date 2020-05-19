@@ -108,6 +108,11 @@ class User extends AbstractModel
     protected static $gate;
 
     /**
+     * An array of callbacks to check the user's password
+     */
+    protected static $passwordCheckers = [];
+
+    /**
      * Boot the model.
      *
      * @return void
@@ -170,6 +175,14 @@ class User extends AbstractModel
     public static function setGate($gate)
     {
         static::$gate = $gate;
+    }
+
+    /**
+     * @param array $passwordCheckers
+     */
+    public static function setPasswordCheckers($passwordCheckers)
+    {
+        static::$passwordCheckers = $passwordCheckers;
     }
 
     /**
@@ -320,13 +333,28 @@ class User extends AbstractModel
      */
     public function checkPassword($password)
     {
+        /**
+         * @deprecated beta 14, remove in beta 15.
+         */
         $valid = static::$dispatcher->until(new CheckingPassword($this, $password));
 
         if ($valid !== null) {
             return $valid;
         }
 
-        return static::$hasher->check($password, $this->password);
+        $valid = false;
+
+        foreach (static::$passwordCheckers as $checker) {
+            $result = $checker($this, $password);
+
+            if ($result === false) {
+                return false;
+            } elseif ($result === true) {
+                $valid = true;
+            }
+        }
+
+        return $valid;
     }
 
     /**
@@ -719,6 +747,16 @@ class User extends AbstractModel
     }
 
     /**
+     * Get the hasher with which to hash passwords.
+     *
+     * @param Hasher $hasher
+     */
+    public static function getHasher()
+    {
+        return static::$hasher;
+    }
+
+    /**
      * Set the hasher with which to hash passwords.
      *
      * @param Hasher $hasher
@@ -727,6 +765,7 @@ class User extends AbstractModel
     {
         static::$hasher = $hasher;
     }
+
 
     /**
      * Register a preference with a transformer and a default value.
