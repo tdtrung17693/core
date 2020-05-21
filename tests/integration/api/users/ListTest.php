@@ -17,17 +17,6 @@ class ListTest extends TestCase
 {
     use RetrievesAuthorizedUsers;
 
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        $this->prepareDatabase([
-            'groups' => [
-                $this->guestGroup(),
-            ],
-        ]);
-    }
-
     /**
      * @test
      */
