@@ -9,8 +9,9 @@
 
 namespace Flarum\Tests\integration;
 
+use Carbon\Carbon;
 use Dflydev\FigCookies\SetCookie;
-use Flarum\Http\AccessToken;
+use Illuminate\Support\Str;
 use Laminas\Diactoros\CallbackStream;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
@@ -33,10 +34,15 @@ trait BuildsHttpRequests
 
     protected function requestAsUser(Request $req, int $userId): Request
     {
-        $token = AccessToken::generate($userId);
-        $token->save();
+        $token = Str::random(40);
 
-        return $req->withAddedHeader('Authorization', "Token {$token->token}");
+        $this->prepareDatabase([
+            'access_tokens' => [
+                ['token' => $token, 'user_id' => $userId, 'created_at' => Carbon::now()->toDateTimeString(), 'last_activity_at' => Carbon::now()->toDateTimeString(), 'lifetime_seconds' => 3600],
+            ],
+        ]);
+
+        return $req->withAddedHeader('Authorization', "Token {$token}");
     }
 
     protected function requestWithCookiesFrom(Request $req, Response $previous): Request
