@@ -31,13 +31,6 @@ class ListTest extends TestCase
             'users' => [
                 $this->normalUser(),
             ],
-            'groups' => [
-                $this->memberGroup(),
-                $this->guestGroup(),
-            ],
-            'group_permission' => [
-                ['permission' => 'viewDiscussions', 'group_id' => 2],
-            ]
         ]);
     }
 
@@ -77,14 +70,15 @@ class ListTest extends TestCase
      */
     public function can_search_for_word_in_post()
     {
-        $this->database()->table('discussions')->insert([
-            ['id' => 2, 'title' => 'lightsail in title', 'created_at' => Carbon::now()->toDateTimeString(), 'user_id' => 2, 'comment_count' => 1],
-            ['id' => 3, 'title' => 'not in title', 'created_at' => Carbon::now()->toDateTimeString(), 'user_id' => 2, 'comment_count' => 1],
-        ]);
-
-        $this->database()->table('posts')->insert([
-            ['id' => 2, 'discussion_id' => 2, 'created_at' => Carbon::now()->toDateTimeString(), 'user_id' => 2, 'type' => 'comment', 'content' => '<t><p>not in text</p></t>'],
-            ['id' => 3, 'discussion_id' => 3, 'created_at' => Carbon::now()->toDateTimeString(), 'user_id' => 2, 'type' => 'comment', 'content' => '<t><p>lightsail in text</p></t>'],
+        $this->prepareDatabase([
+            'discussions' => [
+                ['id' => 2, 'title' => 'lightsail in title', 'created_at' => Carbon::now()->toDateTimeString(), 'user_id' => 2, 'comment_count' => 1],
+                ['id' => 3, 'title' => 'not in title', 'created_at' => Carbon::now()->toDateTimeString(), 'user_id' => 2, 'comment_count' => 1],
+            ],
+            'posts' => [
+                ['id' => 2, 'discussion_id' => 2, 'created_at' => Carbon::now()->toDateTimeString(), 'user_id' => 2, 'type' => 'comment', 'content' => '<t><p>not in text</p></t>'],
+                ['id' => 3, 'discussion_id' => 3, 'created_at' => Carbon::now()->toDateTimeString(), 'user_id' => 2, 'type' => 'comment', 'content' => '<t><p>lightsail in text</p></t>'],
+            ],
         ]);
 
         $response = $this->send(
@@ -109,14 +103,15 @@ class ListTest extends TestCase
      */
     public function ignores_non_word_characters_when_searching()
     {
-        $this->database()->table('discussions')->insert([
-            ['id' => 2, 'title' => 'lightsail in title', 'created_at' => Carbon::now()->toDateTimeString(), 'user_id' => 2, 'comment_count' => 1],
-            ['id' => 3, 'title' => 'not in title', 'created_at' => Carbon::now()->toDateTimeString(), 'user_id' => 2, 'comment_count' => 1],
-        ]);
-
-        $this->database()->table('posts')->insert([
-            ['id' => 2, 'discussion_id' => 2, 'created_at' => Carbon::now()->toDateTimeString(), 'user_id' => 2, 'type' => 'comment', 'content' => '<t><p>not in text</p></t>'],
-            ['id' => 3, 'discussion_id' => 3, 'created_at' => Carbon::now()->toDateTimeString(), 'user_id' => 2, 'type' => 'comment', 'content' => '<t><p>lightsail in text</p></t>'],
+        $this->prepareDatabase([
+            'discussions' => [
+                ['id' => 2, 'title' => 'lightsail in title', 'created_at' => Carbon::now()->toDateTimeString(), 'user_id' => 2, 'comment_count' => 1],
+                ['id' => 3, 'title' => 'not in title', 'created_at' => Carbon::now()->toDateTimeString(), 'user_id' => 2, 'comment_count' => 1],
+            ],
+            'posts' => [
+                ['id' => 2, 'discussion_id' => 2, 'created_at' => Carbon::now()->toDateTimeString(), 'user_id' => 2, 'type' => 'comment', 'content' => '<t><p>not in text</p></t>'],
+                ['id' => 3, 'discussion_id' => 3, 'created_at' => Carbon::now()->toDateTimeString(), 'user_id' => 2, 'type' => 'comment', 'content' => '<t><p>lightsail in text</p></t>'],
+            ],
         ]);
 
         $response = $this->send(
