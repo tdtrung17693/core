@@ -22,11 +22,8 @@ class ListTest extends TestCase
         parent::setUp();
 
         $this->prepareDatabase([
-            'users' => [
-                $this->normalUser(),
-            ],
             'groups' => [
-                $this->hiddenGroup()
+                $this->hiddenGroup(),
             ],
         ]);
     }
@@ -43,7 +40,8 @@ class ListTest extends TestCase
         $this->assertEquals(200, $response->getStatusCode());
         $data = json_decode($response->getBody()->getContents(), true);
 
-        $this->assertEquals(['1'], Arr::pluck($data['data'], 'id'));
+        // The four default groups created by the installer
+        $this->assertEquals(['1', '2', '3', '4'], Arr::pluck($data['data'], 'id'));
     }
 
     /**
@@ -60,7 +58,8 @@ class ListTest extends TestCase
         $this->assertEquals(200, $response->getStatusCode());
         $data = json_decode($response->getBody()->getContents(), true);
 
-        $this->assertEquals(['1', '10'], Arr::pluck($data['data'], 'id'));
+        // The four default groups created by the installer and our hidden group
+        $this->assertEquals(['1', '2', '3', '4', '10'], Arr::pluck($data['data'], 'id'));
     }
 
     protected function hiddenGroup(): array
