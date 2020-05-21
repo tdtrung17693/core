@@ -9,7 +9,6 @@
 
 namespace Flarum\Tests\integration\api\users;
 
-use Flarum\Group\Permission;
 use Flarum\Tests\integration\RetrievesAuthorizedUsers;
 use Flarum\Tests\integration\TestCase;
 
