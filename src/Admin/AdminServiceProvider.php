@@ -54,7 +54,8 @@ class AdminServiceProvider extends AbstractServiceProvider
                 HttpMiddleware\AuthenticateWithSession::class,
                 HttpMiddleware\CheckCsrfToken::class,
                 HttpMiddleware\SetLocale::class,
-                Middleware\RequireAdministrateAbility::class,
+                'flarum.http.frontend_handler',
+                Middleware\RequireAdministrateAbility::class
             ];
         });
 

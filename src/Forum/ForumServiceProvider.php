@@ -64,7 +64,8 @@ class ForumServiceProvider extends AbstractServiceProvider
                 HttpMiddleware\AuthenticateWithSession::class,
                 HttpMiddleware\CheckCsrfToken::class,
                 HttpMiddleware\SetLocale::class,
-                HttpMiddleware\ShareErrorsFromSession::class
+                HttpMiddleware\ShareErrorsFromSession::class,
+                'flarum.http.frontend_handler'
             ];
         });
 
