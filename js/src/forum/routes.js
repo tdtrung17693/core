@@ -4,6 +4,7 @@ import PostsUserPage from './components/PostsUserPage';
 import DiscussionsUserPage from './components/DiscussionsUserPage';
 import SettingsPage from './components/SettingsPage';
 import NotificationsPage from './components/NotificationsPage';
+import ErrorPage from './components/ErrorPage';
 
 /**
  * The `routes` initializer defines the forum app's routes.
@@ -24,6 +25,8 @@ export default function (app) {
 
     settings: { path: '/settings', component: SettingsPage.component() },
     notifications: { path: '/notifications', component: NotificationsPage.component() },
+
+    '400': { path: '/:400', component: ErrorPage.component() },
   };
 
   /**
