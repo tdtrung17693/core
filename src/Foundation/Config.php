@@ -23,8 +23,6 @@ class Config implements ArrayAccess
     public function __construct(array $data)
     {
         $this->data = $data;
-
-        $this->requireKeys('url');
     }
 
     public function url(): UriInterface
@@ -42,7 +40,7 @@ class Config implements ArrayAccess
         return $this->data['offline'] ?? false;
     }
 
-    private function requireKeys(...$keys)
+    public function requireKeys(...$keys)
     {
         foreach ($keys as $key) {
             if (! array_key_exists($key, $this->data)) {
@@ -51,6 +49,8 @@ class Config implements ArrayAccess
                 );
             }
         }
+
+        return $this;
     }
 
     public function offsetGet($offset)

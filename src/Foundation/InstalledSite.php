@@ -100,7 +100,7 @@ class InstalledSite implements SiteInterface
         $laravel = new Application($container, $this->paths);
 
         $container->instance('env', 'production');
-        $container->instance('flarum.config', $this->config);
+        $container->instance('flarum.config', $this->config->requireKeys('url', 'database'));
         $container->alias('flarum.config', Config::class);
         $container->instance('flarum.debug', $this->config->inDebugMode());
         $container->instance('config', $config = $this->getIlluminateConfig($laravel));
