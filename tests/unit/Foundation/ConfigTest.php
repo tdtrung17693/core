@@ -11,12 +11,10 @@ namespace Flarum\Tests\unit\Foundation;
 
 use Flarum\Foundation\Config;
 use Flarum\Tests\unit\TestCase;
-use InvalidArgumentException;
 use RuntimeException;
 
 class ConfigTest extends TestCase
 {
-
     /** @test */
     public function it_wraps_base_url_in_value_object()
     {
