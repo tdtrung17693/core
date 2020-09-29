@@ -11,7 +11,6 @@ namespace Flarum\Foundation;
 
 use ArrayAccess;
 use Illuminate\Support\Arr;
-use InvalidArgumentException;
 use Laminas\Diactoros\Uri;
 use Psr\Http\Message\UriInterface;
 use RuntimeException;
@@ -38,19 +37,6 @@ class Config implements ArrayAccess
     public function inMaintenanceMode(): bool
     {
         return $this->data['offline'] ?? false;
-    }
-
-    public function requireKeys(...$keys)
-    {
-        foreach ($keys as $key) {
-            if (! array_key_exists($key, $this->data)) {
-                throw new InvalidArgumentException(
-                    "Configuration is invalid without a $key key"
-                );
-            }
-        }
-
-        return $this;
     }
 
     public function offsetGet($offset)

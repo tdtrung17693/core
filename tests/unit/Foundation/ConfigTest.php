@@ -16,13 +16,6 @@ use RuntimeException;
 
 class ConfigTest extends TestCase
 {
-    /** @test */
-    public function it_complains_when_base_url_is_missing()
-    {
-        $this->expectException(InvalidArgumentException::class);
-
-        new Config([]);
-    }
 
     /** @test */
     public function it_wraps_base_url_in_value_object()
